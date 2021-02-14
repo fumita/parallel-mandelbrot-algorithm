@@ -1,5 +1,6 @@
 use std::{io::Write, str::FromStr};
 
+/// sは座標系(ex: 400x600 or 1.0,0.5)
 fn parse_pair<T: FromStr>(s: &str, separator: char) -> Option<(T, T)> {
     match s.find(separator) {
         None => None,
@@ -21,8 +22,13 @@ fn test_parse_pair() {
     assert_eq!(parse_pair::<f64>("0.5x1.5", 'x'), Some((0.5, 1.5)));
 }
 
+/// ピクセルの位置をとり複素平面上の点を返す
+///
+/// bounds: 出力画像の幅と高さ <br>
+/// pixel: 画像上のピクセルを(row, column)の形で指定する<br>
+/// upper_left, lower_right: それぞれ出力画像に描画する複素平面の左上と右上
 fn pixel_to_point(
-    bounds: (usize, usize),
+    bounds: Bounds,
     pixel: (usize, usize),
     upper_left: (f64, f64),
     lower_right: (f64, f64),
@@ -59,16 +65,16 @@ fn escapes(c: Complex<f64>, limit: u32) -> Option<u32> {
 
 fn render(
     pixels: &mut [u8],
-    bounds: (usize, usize),
+    bounds: Bounds,
     upper_left: (f64, f64),
     lower_right: (f64, f64),
 ) {
-    assert!(pixels.len() == bounds.0 * bounds.1);
+    assert_eq!(pixels.len(), bounds.width * bounds.height);
 
-    for r in 0..bounds.1 {
-        for c in 0..bounds.0 {
+    for r in 0..bounds.height {
+        for c in 0..bounds.width {
             let point = pixel_to_point(bounds, (c, r), upper_left, lower_right);
-            pixels[r * bounds.0 + c] = match escapes(
+            pixels[r * bounds.width + c] = match escapes(
                 Complex {
                     re: point.0,
                     im: point.1,
