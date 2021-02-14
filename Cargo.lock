@@ -49,10 +49,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a475fc4af42d83d28adf72968d9bcfaf035a1a9381642d8e85d8a04957767b0d"
 
 [[package]]
-name = "crossbeam"
-version = "0.2.12"
+name = "deque"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bd66663db5a988098a89599d4857919b3acf7f61402e61365acfd3919857b9be"
+checksum = "a694dae478589798d752c7125542f8a5ae8b6e59476172baf2eed67357bdfa27"
 
 [[package]]
 name = "either"
@@ -142,7 +142,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2805ccb10ffe4d10e06ef68a158ff94c255211ecbae848fbde2146b098f93ce7"
 dependencies = [
  "byteorder 1.2.1",
- "rayon",
+ "rayon 0.8.2",
 ]
 
 [[package]]
@@ -167,9 +167,9 @@ checksum = "7d947cbb889ed21c2a84be6ffbaebf5b4e0f4340638cba0444907e38b56be084"
 name = "mandelbrot"
 version = "0.2.0"
 dependencies = [
- "crossbeam",
  "image",
  "num",
+ "rayon 0.4.3",
 ]
 
 [[package]]
@@ -305,6 +305,18 @@ dependencies = [
  "fuchsia-zircon",
  "libc",
  "winapi",
+]
+
+[[package]]
+name = "rayon"
+version = "0.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0f0783f5880c56f5a308e219ac9309dbe781e064741dd5def4c617c440890305"
+dependencies = [
+ "deque",
+ "libc",
+ "num_cpus",
+ "rand 0.3.22",
 ]
 
 [[package]]
