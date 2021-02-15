@@ -69,8 +69,6 @@ fn render(
     upper_left: (f64, f64),
     lower_right: (f64, f64),
 ) {
-    assert_eq!(pixels.len(), bounds.0 * bounds.1);
-
     for r in 0..bounds.1 {
         for c in 0..bounds.0 {
             let point = pixel_to_point(bounds, (c, r), upper_left, lower_right);
@@ -95,8 +93,6 @@ use image::ColorType;
 use std::fs::File;
 use std::io::Result;
 
-/// Write the buffer `pixels`, whose dimensions are given by `bounds`, to the
-/// file named `filename`.
 fn write_bitmap(filename: &str, pixels: &[u8], bounds: (usize, usize)) -> Result<()> {
     let output = (File::create(filename))?;
 
