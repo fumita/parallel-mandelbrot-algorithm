@@ -28,7 +28,7 @@ fn test_parse_pair() {
 /// pixel: 画像上のピクセルを(row, column)の形で指定する<br>
 /// upper_left, lower_right: それぞれ出力画像に描画する複素平面の左上と右上
 fn pixel_to_point(
-    bounds: Bounds,
+    bounds: (usize, usize),
     pixel: (usize, usize),
     upper_left: (f64, f64),
     lower_right: (f64, f64),
@@ -65,16 +65,16 @@ fn escapes(c: Complex<f64>, limit: u32) -> Option<u32> {
 
 fn render(
     pixels: &mut [u8],
-    bounds: Bounds,
+    bounds: (usize, usize),
     upper_left: (f64, f64),
     lower_right: (f64, f64),
 ) {
-    assert_eq!(pixels.len(), bounds.width * bounds.height);
+    assert_eq!(pixels.len(), bounds.0 * bounds.1);
 
-    for r in 0..bounds.height {
-        for c in 0..bounds.width {
+    for r in 0..bounds.1 {
+        for c in 0..bounds.0 {
             let point = pixel_to_point(bounds, (c, r), upper_left, lower_right);
-            pixels[r * bounds.width + c] = match escapes(
+            pixels[r * bounds.0 + c] = match escapes(
                 Complex {
                     re: point.0,
                     im: point.1,
